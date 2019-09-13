@@ -1,0 +1,279 @@
+<!DOCTYPE hmtl>
+<html>
+<head>
+	<title>Kitty Clock </title>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	</head>
+<style>
+
+body {
+  background: #000;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  height: 100%; }
+
+.wrapper {
+
+  width: 600px;
+  height: 600px;
+  margin: 100px auto;
+  color: #fff;
+  border-radius: 50%;
+  background: pink; }
+
+#seconds, #tens {
+  font-size: 2em; }
+
+.wrapper p {
+  line-height: 500px;
+  font-size: 120px;
+  text-align: center; }
+
+.button {
+  text-align: center;
+  background: #ffa600;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  margin: 10%;
+  outline: none; }
+  .button:hover {
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    background: transparent;
+    border: solid 0px transparent;
+    color: #ffa600; }
+
+#button-reset {
+  margin: auto; }
+
+#button-start {
+  position: absolute;
+  top: 0;
+  left: 150px; }
+
+#button-stop {
+  position: absolute;
+  top: 0;
+  right: 150px;
+  width: 0;
+  height: 0;
+  background: transparent;
+  border-top: 200px solid #dadee5;
+  border-left: 200px solid transparent; }
+  #button-stop:hover {
+    border-top-color: #fff; 
+    color: black; }
+
+#button-stop p {
+  font-size: 80px;
+  transform: rotate(45deg); }
+
+#button-stop span {
+  position: absolute;
+  top: -140px;
+  width: 0px;
+  left: -250px;
+  text-align: center;
+  font-size: 50px;
+  font-family: arial;
+  display: block; }
+
+#button-start {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  background: transparent;
+  border-top: 200px solid #dadee5;
+  border-right: 200px solid transparent; }
+  #button-start:hover {
+    border-top-color: #fff; 
+    color: black; }
+
+#button-start p {
+  font-size: 80px;
+  transform: rotate(-45deg); }
+
+#button-start span {
+  position: absolute;
+  top: -135px;
+  width: 0px;
+  left: 145px;
+  text-align: center;
+  font-size: 50px;
+  font-family: arial;
+  display: block; }
+
+#button-reset {
+  height: 150px;
+  width: 150px;
+  background: #020001;
+  border-radius: 50%;
+  line-height: 150px;
+  font-size: 50px;
+  position: absolute;
+  top: 550px;
+  right: 650px; }
+  #button-reset:hover {
+    background: #fff;
+    color: pink; }
+.whisker-left{
+  width: 15px;
+  height: 200px;
+  background: white;
+  transform: rotate(-105deg);
+  position:absolute;
+  top: 500px;
+  left: 405px;
+  display: block;
+}
+.whisker-left-2{
+  width: 15px;
+  height: 200px;
+  background: white;
+  transform: rotate(-120deg);
+  position:absolute;
+  top: 550px;
+  left: 430px;
+  display: block;
+}
+.whisker-left-3{
+  width: 15px;
+  height: 200px;
+  background: white;
+  transform: rotate(-140deg);
+  position:absolute;
+  top: 610px;
+  left: 480px;
+  display: block;
+}
+
+.whisker-right{
+  width: 15px;
+  height: 200px;
+  background: white;
+  transform: rotate(105deg);
+  position:absolute;
+  top: 500px;
+  left: 1010px;
+  display: block;
+}
+.whisker-right-2{
+  width: 15px;
+  height: 200px;
+  background: white;
+  transform: rotate(120deg);
+  position:absolute;
+  top: 550px;
+  left: 990px;
+  display: block;
+}
+.whisker-right-3{
+  width: 15px;
+  height: 200px;
+  background: white;
+  transform: rotate(140deg);
+  position:absolute;
+  top: 610px;
+  left: 945px;
+  display: block;
+}
+</style>
+
+<body>
+<div  class="button" id="button-start">
+  <p><span>Start</span></p>
+  
+</div>
+<div class="button" id="button-stop">
+  
+  <p><span>Stop</span></p>
+
+</div>
+<div class="wrapper">
+<p><span id="seconds">00</span>:<span id="tens">00</span></p>
+<div class="button" id="button-reset">Reset</div>  
+<!-- left whiskers-->
+  <div class="whisker-left" > </div>
+  <div class="whisker-left-2" > </div>
+  <div class="whisker-left-3" > </div>
+  <!-- right whiskers-->
+  <div class="whisker-right" > </div>
+  <div class="whisker-right-2" > </div>
+  <div class="whisker-right-3" > </div>
+</div> 
+</body>
+
+<script>
+  $(function() {
+
+        $("#demo").text(5 + 6);
+
+
+      });
+
+window.onload = function () {
+  
+  var seconds = 00; 
+  var tens = 00; 
+  var appendTens = document.getElementById("tens")
+  var appendSeconds = document.getElementById("seconds")
+  var buttonStart = document.getElementById('button-start');
+  var buttonStop = document.getElementById('button-stop');
+  var buttonReset = document.getElementById('button-reset');
+  var Interval ;
+
+  buttonStart.onclick = function() {
+    
+     clearInterval(Interval);
+     Interval = setInterval(startTimer, 10);
+  }
+  
+    buttonStop.onclick = function() {
+       clearInterval(Interval);
+  }
+  
+
+  buttonReset.onclick = function() {
+     clearInterval(Interval);
+    tens = "00";
+  	seconds = "00";
+    appendTens.innerHTML = tens;
+  	appendSeconds.innerHTML = seconds;
+  }
+  
+   
+  
+  function startTimer () {
+    tens++; 
+    
+    if(tens < 9){
+      appendTens.innerHTML = "0" + tens;
+    }
+    
+    if (tens > 9){
+      appendTens.innerHTML = tens;
+      
+    } 
+    
+    if (tens > 99) {
+      console.log("seconds");
+      seconds++;
+      appendSeconds.innerHTML = "0" + seconds;
+      tens = 0;
+      appendTens.innerHTML = "0" + 0;
+    }
+    
+    if (seconds > 9){
+      appendSeconds.innerHTML = seconds;
+    }
+  
+  }
+  
+
+}
+</script>	
+</html>
